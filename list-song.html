@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul id="listSong">
+        <li>Tinh con nho gi khong</li>
+    </ul>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script>
+        $.ajax({
+            method: 'GET',
+            url: 'https://localhost:44334/api/Songs',
+            headers: {
+                'content-type': 'application/json'
+            },
+            success: function (data, textStatus, jqXHR) {
+                var htmlContent = '';
+                for (var i = 0; i < data.length; i++){
+                    htmlContent += `<li>${data[i].name}</li>`;
+                }
+                $('#listSong').html(htmlContent);
+            },
+            error: function (jqXHR, exception) {
+                alert('Not okie');
+            }
+        });
+    </script>
+</body>
+</html>

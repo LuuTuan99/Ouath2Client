@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .error {
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>Create Song</legend>
+        <form action="" method="post" name="songForm" id="songForm">
+            <div>Name <input type="text" name="name"></div>
+            <div>Author <input type="text" name="author"></div>
+            <div>Singer <input type="text" name="singer"></div>
+            <div>Thumbnail <input type="text" name="thumbnail"></div>
+            <div>Link <input type="text" name="link"></div>
+            <div>
+                <input type="submit" value="Submit" name="btnSubmit">
+                <input type="reset" value="Reset" name="btnReset">
+            </div>
+        </form>
+    </fieldset>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script>
+        $('#songForm').validate({
+            'rules': {
+                'name': {
+                    'required': true,
+                    'minlength': 7,
+                    'maxlength': 30
+                },
+                'author': {
+                    'equalTo': '[name=name]'
+                },
+                'singer': {},
+                'thumbnail': {},
+                'link': {}
+            },
+            'messages': {
+                'name': {
+                    'required': 'Xin nhập tên của bạn.',
+                    'minlength': 'Vui lòng nhập ít nhất {0}.',
+                    'maxlength': 'Vui lòng nhập nhiều nhất {0}.'
+                },
+                s
+                'link': {
+                    'required': 'Nhập link vào đây.',
+                    'url': 'Nhập link đúng định dạng'
+                },
+                'author': {
+                    'equalTo' : 'Nhập theo tên bài hát.'
+                }
+            },
+            'submitHandler': function (form) {
+                var _name = $('[name=name]').val();
+                var _author = $('[name=author]').val();
+                var _singer = $('[name=singer]').val();
+                var _thumbnail = $('[name=thumbnail]').val();
+                var _link = $('[name=link]').val();
+                var dataToSend = {
+                    name: _name,
+                    author: _author,
+                    singer: _singer,
+                    thumbnail: _thumbnail,
+                    link: _link
+                };
+                $.ajax({
+                    method: 'POST',
+                    url: 'https://musicmanager20181215105347.azurewebsites.net/api/songs',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: JSON.stringify(dataToSend),
+                    success: function (data, textStatus, jqXHR) {
+                        alert('Success');
+                    },
+                    error: function (jqXHR, exception) {
+                        alert('Not okie');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
